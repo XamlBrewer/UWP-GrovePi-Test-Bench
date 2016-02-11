@@ -98,9 +98,14 @@
     <Compile Include="Mvvm\BindableBase.cs" />
     <Compile Include="Mvvm\DelegateCommand.cs" />
     <Compile Include="Services\Log.cs" />
-    <Compile Include="Services\Toast.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\MenuItem.cs" />
+    <Compile Include="ViewModels\Sensors\Button.cs" />
+    <Compile Include="ViewModels\Sensors\LedBar.cs" />
+    <Compile Include="ViewModels\Sensors\LightSensor.cs" />
+    <Compile Include="ViewModels\Sensors\TemperatureSensor.cs" />
+    <Compile Include="ViewModels\Sensors\Led.cs" />
+    <Compile Include="ViewModels\Sensors\SensorBase.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
@@ -116,6 +121,11 @@
     <None Include="XamlBrewer.IoT.GrovePiSample_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Sensors\LedBar.jpg" />
+    <Content Include="Assets\Sensors\Button.jpg" />
+    <Content Include="Assets\Sensors\LightSensor.jpg" />
+    <Content Include="Assets\Sensors\TemperatureSensor.jpg" />
+    <Content Include="Assets\Sensors\Led.jpg" />
     <Content Include="Assets\Toast\Confused.png" />
     <Content Include="Assets\Toast\Wink.png" />
     <Content Include="Assets\Toast\Worried.png" />

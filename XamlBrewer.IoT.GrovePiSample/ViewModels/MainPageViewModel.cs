@@ -1,14 +1,10 @@
 ﻿using GrovePi;
 using Mvvm;
-using Mvvm.Services;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using XamlBrewer.IoT.Sensors;
 
 namespace XamlBrewer.IoT.GrovePiSample.ViewModels
 {
@@ -24,6 +20,7 @@ namespace XamlBrewer.IoT.GrovePiSample.ViewModels
 
         public MainPageViewModel()
         {
+            AddSensors();
             startTestCommand = new DelegateCommand(StartTest_Executed);
         }
 
@@ -34,28 +31,53 @@ namespace XamlBrewer.IoT.GrovePiSample.ViewModels
             get { return startTestCommand; }
         }
 
+        public List<SensorBase> Sensors { get; } = new List<SensorBase>();
+
+        private void AddSensors()
+        {
+            Sensors.Add(new Led() { Name = "Blinky", Port = "D4" });
+            Sensors.Add(new TemperatureSensor() { Name = "Celsius", Port = "A2" });
+            Sensors.Add(new LightSensor() { Name = "Light", Port = "A1" });
+            Sensors.Add(new Button() { Name = "PushButton", Port = "D3" });
+            Sensors.Add(new LedBar() { Name = "LED Bar", Port = "D2" });
+        }
+
         private async void StartTest_Executed()
         {
-            // Toast.ShowInfo("Starting test."); // The notification platform is unavailable.
+            Message = "Full test started.";
 
             try
             {
-                var blinky = DeviceFactory.Build.Led(Pin.DigitalPin4);
-                if (blinky == null)
+                // Detect GrovePi.
+                var board = DeviceFactory.Build.GrovePi();
+                if (board == null)
                 {
-                    Message = "Failed to intialize led.";
+                    Message = "GrovePi board not detected.";
                     return;
                 }
 
-                for (int i = 0; i < 10; i++)
+                // board.PinMode(Pin.DigitalPin4, PinMode.Output);
+                // board.DigitalWrite(Pin.DigitalPin4, 255);
+
+                foreach (var sensor in Sensors)
                 {
-                    blinky.ChangeState(GrovePi.Sensors.SensorStatus.On);
-                    Message = "Blinky on";
-                    await Task.Delay(TimeSpan.FromSeconds(1));
-                    blinky.ChangeState(GrovePi.Sensors.SensorStatus.Off);
-                    Message = "Blinky off";
-                    await Task.Delay(TimeSpan.FromSeconds(1));
+                    Message = "Testing " + sensor.Name + " on " + sensor.Port + ".";
+                    sensor.IsUnderTest = true;
+
+                    try
+                    {
+                        await sensor.Test();
+                    }
+                    catch (Exception ex)
+                    {
+                        sensor.State = ex.Message;
+                    }
+                    finally {
+                        sensor.IsUnderTest = false;
+                    }
                 }
+
+                Message = "Full test finished.";
             }
             catch (Exception ex)
             {

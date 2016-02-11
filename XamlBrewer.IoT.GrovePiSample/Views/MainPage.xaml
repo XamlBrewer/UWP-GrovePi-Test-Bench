@@ -11,10 +11,43 @@
             <TextBlock Text="{x:Bind ViewModel.Message, Mode=OneWay}"
                        Foreground="Black"
                        Margin="20" />
+            <Button Content="Start Main Test"
+                    Click="Button_Click"
+                    Margin="20" />
             <Button Content="Start Test"
                     Command="{x:Bind ViewModel.StartTestCommand}"
                     Margin="20" />
-            
+            <GridView ItemsSource="{x:Bind ViewModel.Sensors, Mode=OneWay}">
+                <GridView.ItemTemplate>
+                    <!-- TODO: Consider DataTemplateSelector -->
+                    <DataTemplate>
+                        <Grid Width="200">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="200" />
+                                <RowDefinition Height="30"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="{Binding Name}"
+                                       FontWeight="SemiBold"
+                                       Grid.Row="0" />
+                            <TextBlock Text="{Binding Port}"
+                                       Grid.Row="1" />
+                            <Button Content="Test"
+                                    Command="{Binding TestCommand}"
+                                    Grid.Row="2" />
+                            <TextBlock Text="{Binding State}"
+                                       Grid.Row="4" />
+                            <Image Source="{Binding ImagePath}"
+                                   Height="200"
+                                   Width="200"
+                                   Stretch="Uniform"
+                                   Grid.Row="3" />
+                        </Grid>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
         </StackPanel>
     </Grid>
 </Page>
