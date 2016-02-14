@@ -10,6 +10,7 @@ namespace XamlBrewer.IoT.Sensors
         public LightSensor()
         {
             ImagePath = "ms-appx:///Assets/Sensors/LightSensor.jpg";
+            TestDescription = "The sensor will measure the light intensity during 30 seconds.";
         }
 
         public override async Task Test()
@@ -21,9 +22,11 @@ namespace XamlBrewer.IoT.Sensors
                 return;
             }
 
-            var light = sensor.SensorValue();
-
-            State = light.ToString();
+            for (int i = 0; i < 120; i++)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(.5));
+                State = sensor.SensorValue().ToString();
+            }
         }
     }
 }

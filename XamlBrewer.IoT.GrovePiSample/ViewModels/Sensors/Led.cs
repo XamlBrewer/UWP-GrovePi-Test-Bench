@@ -10,6 +10,7 @@ namespace XamlBrewer.IoT.Sensors
         public Led()
         {
             ImagePath = "ms-appx:///Assets/Sensors/Led.jpg";
+            TestDescription = "During 1 minute the LED will blink every other second.";
         }
 
         public override async Task Test()
@@ -21,7 +22,7 @@ namespace XamlBrewer.IoT.Sensors
                 return;
             }
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 30; i++)
             {
                 blinky.ChangeState(GrovePi.Sensors.SensorStatus.On);
                 State = "on";

@@ -1,8 +1,5 @@
 ﻿using GrovePi;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using XamlBrewer.IoT.GrovePiSample.ViewModels;
 
@@ -13,6 +10,7 @@ namespace XamlBrewer.IoT.Sensors
         public Button()
         {
             ImagePath = "ms-appx:///Assets/Sensors/Button.jpg";
+            TestDescription = "During 1 minute the button will listen for press events.";
         }
 
         public override async Task Test()
@@ -24,7 +22,12 @@ namespace XamlBrewer.IoT.Sensors
                 return;
             }
 
-            State = btn.CurrentState.ToString();
+            for (int i = 0; i < 300; i++)
+            {
+                State = btn.CurrentState.ToString();
+                await Task.Delay(TimeSpan.FromSeconds(.2));
+            }
+
             return;
         }
     }

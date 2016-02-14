@@ -1,28 +1,24 @@
-﻿<Application
-    x:Class="XamlBrewer.IoT.GrovePiSample.App"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:XamlBrewer.IoT.GrovePiSample"
-    RequestedTheme="Light">
+﻿<Application x:Class="XamlBrewer.IoT.GrovePiSample.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:XamlBrewer.IoT.GrovePiSample"
+             RequestedTheme="Light">
     <Application.Resources>
         <!-- Theme Resources -->
         <!-- Header -->
         <SolidColorBrush x:Key="TitlebarBackgroundBrush"
-                         Color="#FF8D3700" />
+                         Color="#FF404040" />
         <SolidColorBrush x:Key="StatusbarBackgroundBrush"
-                         Color="#FF8D3700" />
+                         Color="DimGray" />
         <!-- Splitview Pane -->
         <SolidColorBrush x:Key="SplitViewBackgroundBrush"
-                         Color="#FFF29C04" />
+                         Color="DarkBlue" />
         <SolidColorBrush x:Key="SplitViewForegroundBrush"
                          Color="White" />
         <SolidColorBrush x:Key="SplitViewHighlightBrush"
-                         Color="#FF903700" />
+                         Color="OrangeRed" />
         <!-- Splitview Content -->
         <SolidColorBrush x:Key="PageBackgroundBrush"
-                         Color="#FFFFF7AA" />
-
-        <SolidColorBrush x:Key="LightGreenLeftover"
-                         Color="#FFD9F34A" />
+                         Color="White" />
     </Application.Resources>
 </Application>

@@ -10,6 +10,7 @@ namespace XamlBrewer.IoT.Sensors
         public TemperatureSensor()
         {
             ImagePath = "ms-appx:///Assets/Sensors/TemperatureSensor.jpg";
+            TestDescription = "The sensor will measure the temperature in °C during 30 seconds.";
         }
 
         public override async Task Test()
@@ -21,9 +22,11 @@ namespace XamlBrewer.IoT.Sensors
                 return;
             }
 
-            var temp = sensor.TemperatureInCelcius();
-
-            State = temp.ToString();
+            for (int i = 0; i < 120; i++)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(.5));
+                State = sensor.TemperatureInCelcius().ToString();
+            }
         }
     }
 }

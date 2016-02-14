@@ -1,4 +1,5 @@
 ﻿using Mvvm;
+using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -10,6 +11,7 @@ namespace XamlBrewer.IoT.GrovePiSample.ViewModels
         private string port;
         private string state;
         private bool isUnterTest;
+        private string testDescription;
 
         public string Name
         {
@@ -37,6 +39,12 @@ namespace XamlBrewer.IoT.GrovePiSample.ViewModels
 
         public string ImagePath { get; set; }
 
+        public string TestDescription
+        {
+            get { return testDescription; }
+            set { SetProperty(ref testDescription, value); }
+        }
+
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public virtual async Task Test()
         { }
@@ -44,12 +52,32 @@ namespace XamlBrewer.IoT.GrovePiSample.ViewModels
 
         public ICommand TestCommand
         {
-            get { return new DelegateCommand(Test_Executed); }
+            get { return new DelegateCommand(Test_Executed, Test_CanExecute); }
+        }
+
+        private bool Test_CanExecute()
+        {
+            return !IsUnderTest;
         }
 
         private async void Test_Executed()
         {
-            await Test();
+            await TestContainer();
+        }
+
+        private async Task TestContainer()
+        {
+            IsUnderTest = true;
+            try
+            {
+                await Test();
+            }
+            catch (Exception ex)
+            {
+                State = ex.Message;
+            }
+
+            IsUnderTest = false;
         }
     }
 }

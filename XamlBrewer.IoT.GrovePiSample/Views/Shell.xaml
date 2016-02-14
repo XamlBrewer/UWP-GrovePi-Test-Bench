@@ -11,13 +11,27 @@
     </Page.DataContext>
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <!-- Header -->
+        <Border Height="40"
+                Background="{StaticResource TitlebarBackgroundBrush}">
+            <TextBlock Text="XAML Brewer GrovePi Test Kit" VerticalAlignment="Center"
+                       HorizontalAlignment="Left"
+                       Margin="20 0"
+                       Foreground="White"
+                       FontSize="18" />
+        </Border>
         <!-- SplitView -->
         <SplitView x:Name="MySplitView"
                    IsPaneOpen="False"
                    CompactPaneLength="40"
                    OpenPaneLength="150"
                    PaneBackground="{StaticResource SplitViewBackgroundBrush}"
-                   DisplayMode="Overlay">
+                   DisplayMode="Overlay"
+                   Grid.Row="1">
             <SplitView.Pane>
                 <Grid x:Name="SplitViewPane"
                       VerticalAlignment="Stretch"

@@ -96,6 +96,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Mvvm\BindableBase.cs" />
+    <Compile Include="Mvvm\BooleanToVisibilityConverter.cs" />
     <Compile Include="Mvvm\DelegateCommand.cs" />
     <Compile Include="Services\Log.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
