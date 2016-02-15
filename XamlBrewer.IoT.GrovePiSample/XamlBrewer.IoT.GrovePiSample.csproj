@@ -101,6 +101,8 @@
     <Compile Include="Services\Log.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\MenuItem.cs" />
+    <Compile Include="ViewModels\Sensors\InfraredEmitter.cs" />
+    <Compile Include="ViewModels\Sensors\InfraredReceiver.cs" />
     <Compile Include="ViewModels\Sensors\VibrationMotor.cs" />
     <Compile Include="ViewModels\Sensors\PassiveInfraRedSensor.cs" />
     <Compile Include="ViewModels\Sensors\RotaryAngleSensor.cs" />
@@ -125,6 +127,8 @@
     <None Include="XamlBrewer.IoT.GrovePiSample_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Sensors\InfraredReceiver.jpg" />
+    <Content Include="Assets\Sensors\InfraredEmitter.jpg" />
     <Content Include="Assets\Sensors\VibrationMotor.jpg" />
     <Content Include="Assets\Sensors\PassiveInfraRedSensor.jpg" />
     <Content Include="Assets\Sensors\RotaryAngleSensor.jpg" />
