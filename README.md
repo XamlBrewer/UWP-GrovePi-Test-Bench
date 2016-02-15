@@ -9,6 +9,7 @@ Currently supported:
 * PIR Motion Sensor
 * Rotary Angle Sensor (a.k.a knob)
 * Temperature Sensor
+* Vibration Motor
 
 Working on:
 * Infrared Emitter
