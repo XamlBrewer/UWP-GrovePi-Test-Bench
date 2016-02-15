@@ -101,6 +101,8 @@
     <Compile Include="Services\Log.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\MenuItem.cs" />
+    <Compile Include="ViewModels\Sensors\PassiveInfraRedSensor.cs" />
+    <Compile Include="ViewModels\Sensors\RotaryAngleSensor.cs" />
     <Compile Include="ViewModels\Sensors\Button.cs" />
     <Compile Include="ViewModels\Sensors\LedBar.cs" />
     <Compile Include="ViewModels\Sensors\LightSensor.cs" />
@@ -122,6 +124,8 @@
     <None Include="XamlBrewer.IoT.GrovePiSample_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Sensors\PassiveInfraRedSensor.jpg" />
+    <Content Include="Assets\Sensors\RotaryAngleSensor.jpg" />
     <Content Include="Assets\Sensors\LedBar.jpg" />
     <Content Include="Assets\Sensors\Button.jpg" />
     <Content Include="Assets\Sensors\LightSensor.jpg" />

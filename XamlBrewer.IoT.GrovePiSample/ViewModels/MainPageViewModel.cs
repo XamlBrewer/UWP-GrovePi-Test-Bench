@@ -38,8 +38,10 @@ namespace XamlBrewer.IoT.GrovePiSample.ViewModels
             Sensors.Add(new Led() { Name = "Blinky", Port = "D4" });
             Sensors.Add(new TemperatureSensor() { Name = "Celsius", Port = "A2" });
             Sensors.Add(new LightSensor() { Name = "Light", Port = "A1" });
+            Sensors.Add(new RotaryAngleSensor { Name = "Knob", Port = "A0" });
             Sensors.Add(new Button() { Name = "PushButton", Port = "D3" });
-            Sensors.Add(new LedBar() { Name = "LED Bar", Port = "D2" });
+            Sensors.Add(new LedBar() { Name = "LED Bar", Port = "D4" });
+            Sensors.Add(new PassiveInfraRedSensor() { Name = "Motion Sensor", Port = "D2" });
         }
 
         private async void StartTest_Executed()
