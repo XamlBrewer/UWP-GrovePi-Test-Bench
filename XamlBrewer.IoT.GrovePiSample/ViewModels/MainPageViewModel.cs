@@ -42,6 +42,7 @@ namespace XamlBrewer.IoT.GrovePiSample.ViewModels
             Sensors.Add(new Button() { Name = "PushButton", Port = "D3" });
             Sensors.Add(new LedBar() { Name = "LED Bar", Port = "D4" });
             Sensors.Add(new PassiveInfraRedSensor() { Name = "Motion Sensor", Port = "D2" });
+            Sensors.Add(new VibrationMotor() { Name = "Bzzzz", Port = "D6" });
         }
 
         private async void StartTest_Executed()
