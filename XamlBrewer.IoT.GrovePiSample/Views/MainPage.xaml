@@ -16,12 +16,6 @@
             <TextBlock Text="{x:Bind ViewModel.Message, Mode=OneWay}"
                        Foreground="Black"
                        Margin="20" />
-            <!--<Button Content="Start Main Test"
-                    Click="Button_Click"
-                    Margin="20" />
-            <Button Content="Start Test"
-                    Command="{x:Bind ViewModel.StartTestCommand}"
-                    Margin="20" />-->
             <GridView ItemsSource="{x:Bind ViewModel.Sensors, Mode=OneWay}"
                       SelectionMode="None"
                       Margin="4">
@@ -35,7 +29,7 @@
                                 <RowDefinition Height="30" />
                                 <RowDefinition Height="170" />
                                 <RowDefinition Height="40" />
-                                <RowDefinition Height="30" />
+                                <RowDefinition Height="40" />
                             </Grid.RowDefinitions>
                             <Grid Background="{StaticResource TitlebarBackgroundBrush}">
                                 <TextBlock Text="{Binding Name}"
@@ -48,9 +42,11 @@
                                            HorizontalAlignment="Right" />
                             </Grid>
                             <Button Content="Test"
-                                    Command="{Binding TestCommand}" Margin="8 4"
+                                    Command="{Binding TestCommand}"
+                                    Margin="8 4"
                                     Grid.Row="2" />
                             <TextBlock Text="{Binding State}"
+                                       TextWrapping="WrapWholeWords"
                                        Grid.Row="3"
                                        Padding="8 4" />
                             <Image Source="{Binding ImagePath}"

@@ -1,4 +1,5 @@
 ﻿using Mvvm;
+using Mvvm.Services;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -75,6 +76,7 @@ namespace XamlBrewer.IoT.GrovePiSample.ViewModels
             catch (Exception ex)
             {
                 State = ex.Message;
+                Log.Error(this.Name + " - " + ex.Message);
             }
 
             IsUnderTest = false;

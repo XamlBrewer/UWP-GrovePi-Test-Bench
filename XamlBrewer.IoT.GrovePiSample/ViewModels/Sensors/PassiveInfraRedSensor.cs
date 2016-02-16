@@ -25,7 +25,7 @@ namespace XamlBrewer.IoT.Sensors
 
             for (int i = 0; i < 240; i++)
             {
-                State = btn.CurrentState.ToString();
+                State = btn.CurrentState.AsMotionState().ToString();
                 await Task.Delay(TimeSpan.FromSeconds(.25));
             }
 

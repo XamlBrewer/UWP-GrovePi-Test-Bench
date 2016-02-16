@@ -101,6 +101,7 @@
     <Compile Include="Services\Log.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\MenuItem.cs" />
+    <Compile Include="ViewModels\Sensors\SensorStatusExtensions.cs" />
     <Compile Include="ViewModels\Sensors\InfraredEmitter.cs" />
     <Compile Include="ViewModels\Sensors\InfraredReceiver.cs" />
     <Compile Include="ViewModels\Sensors\VibrationMotor.cs" />

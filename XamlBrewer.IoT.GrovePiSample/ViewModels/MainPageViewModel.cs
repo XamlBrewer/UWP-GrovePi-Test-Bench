@@ -21,14 +21,17 @@ namespace XamlBrewer.IoT.GrovePiSample.ViewModels
         public MainPageViewModel()
         {
             AddSensors();
-            startTestCommand = new DelegateCommand(StartTest_Executed);
-        }
 
-        private ICommand startTestCommand;
-
-        public ICommand StartTestCommand
-        {
-            get { return startTestCommand; }
+            // Check the board.
+            var board = DeviceFactory.Build.GrovePi();
+            if (board == null)
+            {
+                Message = "GrovePi board not detected.";
+            }
+            else
+            {
+                Message = "GrovePi board is ready.";
+            }
         }
 
         public List<SensorBase> Sensors { get; } = new List<SensorBase>();
@@ -42,52 +45,9 @@ namespace XamlBrewer.IoT.GrovePiSample.ViewModels
             Sensors.Add(new Button() { Name = "PushButton", Port = "D3" });
             Sensors.Add(new LedBar() { Name = "LED Bar", Port = "D4" });
             Sensors.Add(new PassiveInfraRedSensor() { Name = "Motion Sensor", Port = "D2" });
-            Sensors.Add(new VibrationMotor() { Name = "Bzzzz", Port = "D6" });
+            Sensors.Add(new VibrationMotor() { Name = "Vibration Motor", Port = "D6" });
             Sensors.Add(new InfraredEmitter() { Name = "IR Emitter", Port = "D7" });
             Sensors.Add(new InfraredReceiver() { Name = "IR Receiver", Port = "D8" });
-        }
-
-        private async void StartTest_Executed()
-        {
-            Message = "Full test started.";
-
-            try
-            {
-                // Detect GrovePi.
-                var board = DeviceFactory.Build.GrovePi();
-                if (board == null)
-                {
-                    Message = "GrovePi board not detected.";
-                    return;
-                }
-
-                // board.PinMode(Pin.DigitalPin4, PinMode.Output);
-                // board.DigitalWrite(Pin.DigitalPin4, 255);
-
-                foreach (var sensor in Sensors)
-                {
-                    Message = "Testing " + sensor.Name + " on " + sensor.Port + ".";
-                    sensor.IsUnderTest = true;
-
-                    try
-                    {
-                        await sensor.Test();
-                    }
-                    catch (Exception ex)
-                    {
-                        sensor.State = ex.Message;
-                    }
-                    finally {
-                        sensor.IsUnderTest = false;
-                    }
-                }
-
-                Message = "Full test finished.";
-            }
-            catch (Exception ex)
-            {
-                Message = ex.Message;
-            }
         }
     }
 }
