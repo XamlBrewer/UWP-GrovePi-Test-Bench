@@ -20,17 +20,16 @@ namespace XamlBrewer.IoT.GrovePiSample.ViewModels
 
         public MainPageViewModel()
         {
-            AddSensors();
-
             // Check the board.
             var board = DeviceFactory.Build.GrovePi();
             if (board == null)
             {
-                Message = "GrovePi board not detected.";
+                Message = "Sorry, your GrovePi board could not be detected.";
             }
             else
             {
-                Message = "GrovePi board is ready.";
+                Message = "Your GrovePi board is ready.";
+                AddSensors();
             }
         }
 
@@ -38,11 +37,11 @@ namespace XamlBrewer.IoT.GrovePiSample.ViewModels
 
         private void AddSensors()
         {
-            Sensors.Add(new Led() { Name = "Blinky", Port = "D4" });
-            Sensors.Add(new TemperatureSensor() { Name = "Celsius", Port = "A2" });
-            Sensors.Add(new LightSensor() { Name = "Light", Port = "A1" });
-            Sensors.Add(new RotaryAngleSensor { Name = "Knob", Port = "A0" });
-            Sensors.Add(new Button() { Name = "PushButton", Port = "D3" });
+            Sensors.Add(new Led() { Name = "Blinky", Port = "D5" });
+            Sensors.Add(new TemperatureSensor() { Name = "Temperature Sensor", Port = "A2" });
+            Sensors.Add(new LightSensor() { Name = "Light Sensor", Port = "A1" });
+            Sensors.Add(new RotaryAngleSensor { Name = "Rotary Encoder", Port = "A0" });
+            Sensors.Add(new Button() { Name = "Push Button", Port = "D3" });
             Sensors.Add(new LedBar() { Name = "LED Bar", Port = "D4" });
             Sensors.Add(new PassiveInfraRedSensor() { Name = "Motion Sensor", Port = "D2" });
             Sensors.Add(new VibrationMotor() { Name = "Vibration Motor", Port = "D6" });

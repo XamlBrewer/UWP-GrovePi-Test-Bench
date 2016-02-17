@@ -5,6 +5,7 @@ using XamlBrewer.IoT.GrovePiSample.ViewModels;
 
 namespace XamlBrewer.IoT.Sensors
 {
+    // NOT OPERATIONAL
     internal class InfraredReceiver : SensorBase
     {
         public InfraredReceiver()
@@ -15,7 +16,8 @@ namespace XamlBrewer.IoT.Sensors
 
         public override async Task Test()
         {
-            // InfraredReceiver is a Digital On/Off sensor, just like the button.
+            // Is InfraredReceiver a Digital On/Off sensor, just like the button?
+            // No, it is not ...
             var btn = DeviceFactory.Build.ButtonSensor(Pin.DigitalPin8);
             if (btn == null)
             {

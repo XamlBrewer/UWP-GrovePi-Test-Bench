@@ -1,4 +1,5 @@
 ﻿using GrovePi;
+using Mvvm.Services;
 using System;
 using System.Threading.Tasks;
 using XamlBrewer.IoT.GrovePiSample.ViewModels;
@@ -10,7 +11,7 @@ namespace XamlBrewer.IoT.Sensors
         public RotaryAngleSensor()
         {
             ImagePath = "ms-appx:///Assets/Sensors/RotaryAngleSensor.jpg";
-            TestDescription = "During 1 minute the knob will register you manipulation.";
+            TestDescription = "During 1 minute the knob will register your manipulation.";
         }
 
         public override async Task Test()
@@ -24,11 +25,19 @@ namespace XamlBrewer.IoT.Sensors
 
             for (int i = 0; i < 300; i++)
             {
-                State = btn.SensorValue().ToString();
+                try
+                {
+                    State = btn.SensorValue().ToString();
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(this.Name + " - " + ex.Message);
+                }
+
                 await Task.Delay(TimeSpan.FromSeconds(.2));
             }
 
-            return;
+            State = String.Empty;
         }
     }
 }

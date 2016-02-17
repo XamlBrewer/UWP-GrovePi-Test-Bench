@@ -1,4 +1,6 @@
 ﻿using GrovePi;
+using GrovePi.Sensors;
+using Mvvm.Services;
 using System;
 using System.Threading.Tasks;
 using XamlBrewer.IoT.GrovePiSample.ViewModels;
@@ -15,8 +17,9 @@ namespace XamlBrewer.IoT.Sensors
 
         public override async Task Test()
         {
-            var blinky = DeviceFactory.Build.Led(Pin.DigitalPin6);
-            if (blinky == null)
+            // Vibration motor is a digital actuator. Just like the LED.
+            var motor = DeviceFactory.Build.Led(Pin.DigitalPin6);
+            if (motor == null)
             {
                 State = "Failed to intialize.";
                 return;
@@ -24,15 +27,33 @@ namespace XamlBrewer.IoT.Sensors
 
             for (int i = 0; i < 30; i++)
             {
-                blinky.ChangeState(GrovePi.Sensors.SensorStatus.On);
-                State = "on";
+                try
+                {
+                    motor.ChangeState(SensorStatus.On);
+                    // State = motor.CurrentState.ToString(); // Always 'Off'
+                    State = "On";
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(this.Name + " - " + ex.Message);
+                }
+
                 await Task.Delay(TimeSpan.FromSeconds(1));
-                blinky.ChangeState(GrovePi.Sensors.SensorStatus.Off);
-                State = "off";
+
+                try
+                {
+                    var led = motor.ChangeState(SensorStatus.Off);
+                    State = "Off";
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(this.Name + " - " + ex.Message);
+                }
+
                 await Task.Delay(TimeSpan.FromSeconds(1));
             }
 
-            State = "OK";
+            State = String.Empty;
         }
     }
 }

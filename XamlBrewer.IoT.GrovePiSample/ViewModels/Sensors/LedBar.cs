@@ -10,6 +10,7 @@ namespace XamlBrewer.IoT.Sensors
         public LedBar()
         {
             ImagePath = "ms-appx:///Assets/Sensors/LedBar.jpg";
+            TestDescription = "Does not work on my machine ...";
         }
 
         public override async Task Test()
@@ -48,7 +49,7 @@ namespace XamlBrewer.IoT.Sensors
                 }
             }
 
-            State = "OK";
+            State = String.Empty;
         }
     }
 }

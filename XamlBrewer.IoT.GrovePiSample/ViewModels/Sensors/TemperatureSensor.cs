@@ -1,4 +1,5 @@
 ﻿using GrovePi;
+using Mvvm.Services;
 using System;
 using System.Threading.Tasks;
 using XamlBrewer.IoT.GrovePiSample.ViewModels;
@@ -10,7 +11,7 @@ namespace XamlBrewer.IoT.Sensors
         public TemperatureSensor()
         {
             ImagePath = "ms-appx:///Assets/Sensors/TemperatureSensor.jpg";
-            TestDescription = "The sensor will measure the temperature in °C during 1 minute.";
+            TestDescription = "The sensor will measure the temperature during 1 minute.";
         }
 
         public override async Task Test()
@@ -24,9 +25,19 @@ namespace XamlBrewer.IoT.Sensors
 
             for (int i = 0; i < 120; i++)
             {
+                try
+                {
+                    State = sensor.TemperatureInCelcius().ToString() + " °C";
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(this.Name + " - " + ex.Message);
+                }
+
                 await Task.Delay(TimeSpan.FromSeconds(.5));
-                State = sensor.TemperatureInCelcius().ToString();
             }
+
+            State = String.Empty;
         }
     }
 }

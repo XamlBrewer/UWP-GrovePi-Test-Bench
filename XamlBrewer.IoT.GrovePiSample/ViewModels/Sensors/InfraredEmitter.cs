@@ -5,6 +5,7 @@ using XamlBrewer.IoT.GrovePiSample.ViewModels;
 
 namespace XamlBrewer.IoT.Sensors
 {
+    // NOT OPERATIONAL
     internal class InfraredEmitter : SensorBase
     {
         public InfraredEmitter()
@@ -15,9 +16,10 @@ namespace XamlBrewer.IoT.Sensors
 
         public override async Task Test()
         {
-            // Infrared emittor is a digital actuator. Just like the LED.
-            var blinky = DeviceFactory.Build.Led(Pin.DigitalPin7);
-            if (blinky == null)
+            // Is Infrared emittor a digital actuator. Just like the LED ?
+            // No, it's not...
+            var ir = DeviceFactory.Build.Led(Pin.DigitalPin7);
+            if (ir == null)
             {
                 State = "Failed to intialize.";
                 return;
@@ -25,10 +27,10 @@ namespace XamlBrewer.IoT.Sensors
 
             for (int i = 0; i < 30; i++)
             {
-                blinky.ChangeState(GrovePi.Sensors.SensorStatus.On);
+                ir.ChangeState(GrovePi.Sensors.SensorStatus.On);
                 State = "on";
                 await Task.Delay(TimeSpan.FromSeconds(1));
-                blinky.ChangeState(GrovePi.Sensors.SensorStatus.Off);
+                ir.ChangeState(GrovePi.Sensors.SensorStatus.Off);
                 State = "off";
                 await Task.Delay(TimeSpan.FromSeconds(1));
             }

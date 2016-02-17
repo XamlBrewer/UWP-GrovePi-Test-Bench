@@ -1,4 +1,5 @@
 ﻿using GrovePi;
+using Mvvm.Services;
 using System;
 using System.Threading.Tasks;
 using XamlBrewer.IoT.GrovePiSample.ViewModels;
@@ -25,7 +26,15 @@ namespace XamlBrewer.IoT.Sensors
 
             for (int i = 0; i < 240; i++)
             {
-                State = btn.CurrentState.AsMotionState().ToString();
+                try
+                {
+                    State = btn.CurrentState.AsMotionState().ToString();
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(this.Name + " - " + ex.Message);
+                }
+
                 await Task.Delay(TimeSpan.FromSeconds(.25));
             }
 

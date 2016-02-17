@@ -15,7 +15,7 @@
         <StackPanel>
             <TextBlock Text="{x:Bind ViewModel.Message, Mode=OneWay}"
                        Foreground="Black"
-                       Margin="20" />
+                       Margin="6" />
             <GridView ItemsSource="{x:Bind ViewModel.Sensors, Mode=OneWay}"
                       SelectionMode="None"
                       Margin="4">
@@ -29,7 +29,7 @@
                                 <RowDefinition Height="30" />
                                 <RowDefinition Height="170" />
                                 <RowDefinition Height="40" />
-                                <RowDefinition Height="40" />
+                                <RowDefinition Height="auto" />
                             </Grid.RowDefinitions>
                             <Grid Background="{StaticResource TitlebarBackgroundBrush}">
                                 <TextBlock Text="{Binding Name}"
@@ -41,13 +41,26 @@
                                            Padding="8 4"
                                            HorizontalAlignment="Right" />
                             </Grid>
-                            <Button Content="Test"
-                                    Command="{Binding TestCommand}"
-                                    Margin="8 4"
-                                    Grid.Row="2" />
+                            <Grid Background="Silver"
+                                  Height="50"
+                                  Grid.Row="3">
+                                <AppBarButton Command="{Binding TestCommand}"
+                                              Icon="Play"
+                                              Foreground="{StaticResource SplitViewBackgroundBrush}" />
+                                <AppBarButton Icon="Message"
+                                              Foreground="{StaticResource SplitViewBackgroundBrush}"
+                                              HorizontalAlignment="Right">
+                                    <Button.Flyout>
+                                        <Flyout>
+                                            <TextBlock Text="{Binding TestDescription}" />
+                                        </Flyout>
+                                    </Button.Flyout>
+                                </AppBarButton>
+                            </Grid>
+
                             <TextBlock Text="{Binding State}"
                                        TextWrapping="WrapWholeWords"
-                                       Grid.Row="3"
+                                       Grid.Row="2"
                                        Padding="8 4" />
                             <Image Source="{Binding ImagePath}"
                                    Height="200"
