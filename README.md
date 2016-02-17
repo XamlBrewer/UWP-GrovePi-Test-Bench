@@ -1,5 +1,6 @@
 # UWP-GrovePi-Test-Bench
-A UWP app to test sensors on a GrovePi board hooked to a Windows 10 Raspbery Pi.
+A UWP app to test sensors and actuators on a GrovePi board hooked to a Windows 10 Raspbery Pi.
+
 ARM only.
 
 Currently supported:
@@ -7,11 +8,11 @@ Currently supported:
 * LED
 * Light Sensor
 * PIR Motion Sensor
-* Rotary Angle Sensor (a.k.a knob)
+* Rotary Angle Sensor
 * Temperature Sensor
 * Vibration Motor
 
-Working on:
+Doing research on:
 * Infrared Emitter
 * Infrared Receiver
 
