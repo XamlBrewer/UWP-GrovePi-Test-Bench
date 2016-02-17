@@ -1,7 +1,5 @@
 # UWP-GrovePi-Test-Bench
-A UWP app to test sensors and actuators on a GrovePi board hooked to a Windows 10 Raspbery Pi.
-
-ARM only.
+A UWP app to test sensors and actuators on a GrovePi board hooked to a Windows 10 Raspbery Pi. So it's ARM only.
 
 Currently supported:
 * Button
@@ -18,3 +16,5 @@ Doing research on:
 
 Having a problem with:
 * LED Bar
+
+Note: runs best (= more stable) in Release mode.
