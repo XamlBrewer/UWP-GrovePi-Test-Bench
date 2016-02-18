@@ -28,7 +28,15 @@ namespace XamlBrewer.IoT.GrovePiSample.ViewModels
             }
             else
             {
-                Message = "Your GrovePi board is ready.";
+                try
+                {
+                    Message = string.Format("Your GrovePi board is ready. (Firmware version {0})", board.GetFirmwareVersion());
+                }
+                catch (Exception)
+                {
+                    Message = "Your Grove board is ready.";
+                }
+
                 AddSensors();
             }
         }
