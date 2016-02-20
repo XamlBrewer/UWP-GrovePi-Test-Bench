@@ -15,8 +15,15 @@ namespace XamlBrewer.IoT.Sensors
             TestDescription = "During 1 minute the LED will blink every other second.";
         }
 
+        /// <summary>
+        /// Blinky.
+        /// </summary>
+        /// <remarks>Extra code added because current state detection does not work on my board.</remarks>
         public override async Task Test()
         {
+            // Test: read current state
+            var board = DeviceFactory.Build.GrovePi();
+
             var blinky = DeviceFactory.Build.Led(Pin.DigitalPin5);
             if (blinky == null)
             {
@@ -29,7 +36,10 @@ namespace XamlBrewer.IoT.Sensors
                 try
                 {
                     blinky.ChangeState(SensorStatus.On);
+                    Log.Info(blinky.CurrentState.ToString());
                     // State = blinky.CurrentState.ToString(); // Always 'Off'
+                    var state = board.AnalogRead(Pin.DigitalPin5);
+                    Log.Info(state.ToString());
                     State = "On";
                 }
                 catch (Exception ex)
@@ -42,6 +52,9 @@ namespace XamlBrewer.IoT.Sensors
                 try
                 {
                     var led = blinky.ChangeState(SensorStatus.Off);
+                    Log.Info(blinky.CurrentState.ToString());
+                    var state = board.AnalogRead(Pin.DigitalPin5);
+                    Log.Info(state.ToString());
                     State = "Off";
                 }
                 catch (Exception ex)
