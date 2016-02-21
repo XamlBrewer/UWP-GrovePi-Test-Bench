@@ -12,11 +12,12 @@
         <TextBlock Text="{x:Bind ViewModel.Message, Mode=OneWay}"
                    Foreground="Black"
                    Margin="6" />
-        <Grid Margin="2"
+        <Grid Margin="4"
               BorderBrush="{StaticResource TitlebarBackgroundBrush}"
               BorderThickness="1"
               VerticalAlignment="Top"
-              HorizontalAlignment="Left">
+              HorizontalAlignment="Left"
+              Width="200">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />
                 <RowDefinition Height="170" />
@@ -29,26 +30,19 @@
                            FontWeight="SemiBold"
                            Padding="8 4" />
             </Grid>
-            <StackPanel Orientation="Horizontal"
-                        Background="Silver"
-                        Height="50"
-                        Grid.Row="3">
-                <AppBarButton Command="{x:Bind ViewModel.StartCommand}"
-                              Icon="Play"
-                              Foreground="{StaticResource SplitViewBackgroundBrush}" />
-                <AppBarButton Command="{x:Bind ViewModel.StopCommand}"
-                              Icon="Stop"
-                              Foreground="DarkRed" />
-                <AppBarButton Icon="Message"
-                              Foreground="{StaticResource SplitViewBackgroundBrush}">
-                    <Button.Flyout>
-                        <Flyout>
-                            <TextBlock Text="{x:Bind ViewModel.Description}" />
-                        </Flyout>
-                    </Button.Flyout>
-                </AppBarButton>
-            </StackPanel>
-
+            <Grid Background="Silver"
+                  Grid.Row="3">
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            Height="50">
+                    <AppBarButton Command="{x:Bind ViewModel.StartCommand}"
+                                  Icon="Play"
+                                  Foreground="{StaticResource SplitViewBackgroundBrush}" />
+                    <AppBarButton Command="{x:Bind ViewModel.StopCommand}"
+                                  Icon="Stop"
+                                  Foreground="DarkRed" />
+                </StackPanel>
+            </Grid>
             <TextBlock Text="{x:Bind ViewModel.State, Mode=OneWay}"
                        TextWrapping="WrapWholeWords"
                        Grid.Row="2"

@@ -2,10 +2,6 @@
 using Mvvm;
 using Mvvm.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Xaml;
 using XamlBrewer.IoT.Sensors;
@@ -18,7 +14,7 @@ namespace XamlBrewer.IoT.GrovePiSample.ViewModels
         private PassiveInfraRedSensor irSensor;
         private Led blinky;
         private VibrationMotor buzzer;
-        private BurglarAlertState state = BurglarAlertState.Inactive;
+        private BurglarAlertState state = BurglarAlertState.Sleeping;
         private DispatcherTimer timer = new DispatcherTimer();
         private DelegateCommand startCommand;
         private DelegateCommand stopCommand;
@@ -56,8 +52,35 @@ namespace XamlBrewer.IoT.GrovePiSample.ViewModels
             get { return state; }
             set
             {
+                blinky.Sensor.ChangeState(GrovePi.Sensors.SensorStatus.Off);
+                buzzer.Sensor.ChangeState(GrovePi.Sensors.SensorStatus.Off);
+
                 SetProperty(ref state, value);
-                Message = "Switching to " + state.ToString();
+
+                switch (state)
+                {
+                    case BurglarAlertState.Sleeping:
+                        timer.Stop();
+                        break;
+                    case BurglarAlertState.Active:
+                        timer.Start();
+                        break;
+                    case BurglarAlertState.MotionDetected:
+                        motionDetection = DateTime.Now;
+                        break;
+                    case BurglarAlertState.Alerting:
+                        try
+                        {
+                            buzzer.Sensor.ChangeState(GrovePi.Sensors.SensorStatus.On);
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Error(ex.Message);
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
@@ -84,57 +107,31 @@ namespace XamlBrewer.IoT.GrovePiSample.ViewModels
             buzzer = new VibrationMotor() { Name = "Vibration Motor", Port = "D6" };
         }
 
-        private async Task SetState(BurglarAlertState state)
+        private void Start_Executed()
         {
-            blinky.Sensor.ChangeState(GrovePi.Sensors.SensorStatus.Off);
-            buzzer.Sensor.ChangeState(GrovePi.Sensors.SensorStatus.Off);
-
-            State = state;
-
-            switch (state)
-            {
-                case BurglarAlertState.Inactive:
-                    timer.Stop();
-                    break;
-                case BurglarAlertState.Active:
-                    timer.Start();
-                    break;
-                case BurglarAlertState.MotionDetected:
-                    motionDetection = DateTime.Now;
-                    break;
-                case BurglarAlertState.Alerting:
-                    buzzer.Sensor.ChangeState(GrovePi.Sensors.SensorStatus.On);
-                    break;
-                default:
-                    break;
-            }
+            State = BurglarAlertState.Active;
         }
 
-        private async void Start_Executed()
+        private void Stop_Executed()
         {
-            await SetState(BurglarAlertState.Active);
-        }
-
-        private async void Stop_Executed()
-        {
-            await SetState(BurglarAlertState.Inactive);
+            State = BurglarAlertState.Sleeping;
         }
 
         /// <summary>
         /// Main process loop.
         /// </summary>
-        private async void Timer_Tick(object sender, object e)
+        private void Timer_Tick(object sender, object e)
         {
             try
             {
                 switch (state)
                 {
-                    case BurglarAlertState.Inactive:
+                    case BurglarAlertState.Sleeping:
                         break;
                     case BurglarAlertState.Active:
                         if (irSensor.Sensor.CurrentState == GrovePi.Sensors.SensorStatus.On)
                         {
-                            await SetState(BurglarAlertState.MotionDetected);
+                            State = BurglarAlertState.MotionDetected;
                         }
                         break;
                     case BurglarAlertState.MotionDetected:
@@ -146,11 +143,11 @@ namespace XamlBrewer.IoT.GrovePiSample.ViewModels
                         {
                             if (irSensor.Sensor.CurrentState == GrovePi.Sensors.SensorStatus.On)
                             {
-                                await SetState(BurglarAlertState.Alerting);
+                                State = BurglarAlertState.Alerting;
                             }
                             else
                             {
-                                await SetState(BurglarAlertState.Active);
+                                State = BurglarAlertState.Active;
                             }
                         }
                         break;
@@ -171,20 +168,27 @@ namespace XamlBrewer.IoT.GrovePiSample.ViewModels
         private void ToggleLed()
         {
             ledState = !ledState;
-            if (ledState)
+            try
             {
-                blinky.Sensor.ChangeState(GrovePi.Sensors.SensorStatus.On);
+                if (ledState)
+                {
+                    blinky.Sensor.ChangeState(GrovePi.Sensors.SensorStatus.On);
+                }
+                else
+                {
+                    blinky.Sensor.ChangeState(GrovePi.Sensors.SensorStatus.Off);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                blinky.Sensor.ChangeState(GrovePi.Sensors.SensorStatus.Off);
+                Log.Error(ex.Message);
             }
         }
     }
 
     enum BurglarAlertState
     {
-        Inactive,
+        Sleeping,
         Active,
         MotionDetected,
         Alerting
