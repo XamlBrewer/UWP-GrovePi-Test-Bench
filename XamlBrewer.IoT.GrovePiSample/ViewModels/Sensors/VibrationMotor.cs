@@ -15,10 +15,12 @@ namespace XamlBrewer.IoT.Sensors
             TestDescription = "During 1 minute the motor will vibrate every other second.";
         }
 
+        public ILed Sensor { get; } = DeviceFactory.Build.Led(Pin.DigitalPin6);
+
         public override async Task Test()
         {
             // Vibration motor is a digital actuator. Just like the LED.
-            var motor = DeviceFactory.Build.Led(Pin.DigitalPin6);
+            var motor = Sensor;
             if (motor == null)
             {
                 State = "Failed to intialize.";

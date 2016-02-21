@@ -15,6 +15,8 @@ namespace XamlBrewer.IoT.Sensors
             TestDescription = "During 1 minute the LED will blink every other second.";
         }
 
+        public ILed Sensor { get; } = DeviceFactory.Build.Led(Pin.DigitalPin5);
+
         /// <summary>
         /// Blinky.
         /// </summary>
@@ -24,7 +26,7 @@ namespace XamlBrewer.IoT.Sensors
             // Test: read current state
             var board = DeviceFactory.Build.GrovePi();
 
-            var blinky = DeviceFactory.Build.Led(Pin.DigitalPin5);
+            var blinky = Sensor;
             if (blinky == null)
             {
                 State = "Failed to intialize.";

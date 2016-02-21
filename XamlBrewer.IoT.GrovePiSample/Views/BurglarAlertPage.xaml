@@ -1,0 +1,60 @@
+﻿<Page x:Class="XamlBrewer.IoT.GrovePiSample.BurglarAlertPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:XamlBrewer.IoT.GrovePiSample"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d">
+
+    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                VerticalAlignment="Stretch"
+                HorizontalAlignment="Stretch">
+        <TextBlock Text="{x:Bind ViewModel.Message, Mode=OneWay}"
+                   Foreground="Black"
+                   Margin="6" />
+        <Grid Margin="2"
+              BorderBrush="{StaticResource TitlebarBackgroundBrush}"
+              BorderThickness="1"
+              VerticalAlignment="Top"
+              HorizontalAlignment="Left">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="170" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Grid Background="{StaticResource TitlebarBackgroundBrush}">
+                <TextBlock Text="{x:Bind ViewModel.Name}"
+                           Foreground="White"
+                           FontWeight="SemiBold"
+                           Padding="8 4" />
+            </Grid>
+            <StackPanel Orientation="Horizontal"
+                        Background="Silver"
+                        Height="50"
+                        Grid.Row="3">
+                <AppBarButton Command="{x:Bind ViewModel.StartCommand}"
+                              Icon="Play"
+                              Foreground="{StaticResource SplitViewBackgroundBrush}" />
+                <AppBarButton Command="{x:Bind ViewModel.StopCommand}"
+                              Icon="Stop"
+                              Foreground="DarkRed" />
+                <AppBarButton Icon="Message"
+                              Foreground="{StaticResource SplitViewBackgroundBrush}">
+                    <Button.Flyout>
+                        <Flyout>
+                            <TextBlock Text="{x:Bind ViewModel.Description}" />
+                        </Flyout>
+                    </Button.Flyout>
+                </AppBarButton>
+            </StackPanel>
+
+            <TextBlock Text="{x:Bind ViewModel.State, Mode=OneWay}"
+                       TextWrapping="WrapWholeWords"
+                       Grid.Row="2"
+                       Padding="8 4" />
+
+        </Grid>
+
+    </StackPanel>
+</Page>

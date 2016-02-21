@@ -1,4 +1,5 @@
 ﻿using GrovePi;
+using GrovePi.Sensors;
 using Mvvm.Services;
 using System;
 using System.Threading.Tasks;
@@ -14,10 +15,12 @@ namespace XamlBrewer.IoT.Sensors
             TestDescription = "During 1 minute the sensor will detect motion.";
         }
 
+        public IButtonSensor Sensor { get; } = DeviceFactory.Build.ButtonSensor(Pin.DigitalPin2);
+
         public override async Task Test()
         {
             // PIR is a Digital On/Off sensor, just like the button.
-            var btn = DeviceFactory.Build.ButtonSensor(Pin.DigitalPin2);
+            var btn = Sensor;
             if (btn == null)
             {
                 State = "Failed to intialize.";
