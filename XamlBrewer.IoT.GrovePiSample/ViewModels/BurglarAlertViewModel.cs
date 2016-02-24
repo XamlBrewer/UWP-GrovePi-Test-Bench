@@ -2,6 +2,7 @@
 using Mvvm;
 using Mvvm.Services;
 using System;
+using System.Collections.Generic;
 using System.Windows.Input;
 using Windows.UI.Xaml;
 using XamlBrewer.IoT.Sensors;
@@ -10,7 +11,7 @@ namespace XamlBrewer.IoT.GrovePiSample.ViewModels
 {
     class BurglarAlertViewModel : ViewModelBase
     {
-        private string message = "Welcome";
+        private string info = "Sleeping";
         private PassiveInfraRedSensor irSensor;
         private Led blinky;
         private VibrationMotor buzzer;
@@ -23,17 +24,6 @@ namespace XamlBrewer.IoT.GrovePiSample.ViewModels
 
         public BurglarAlertViewModel()
         {
-            // Check the board.
-            var board = DeviceFactory.Build.GrovePi();
-            if (board == null)
-            {
-                Message = "Sorry, your GrovePi board could not be detected.";
-            }
-            else
-            {
-                Message = "Your Grove board is ready.";
-            }
-
             AddSensors();
 
             startCommand = new DelegateCommand(Start_Executed);
@@ -45,8 +35,6 @@ namespace XamlBrewer.IoT.GrovePiSample.ViewModels
 
         public string Name { get; } = "Burglar Alert";
 
-        public string Description { get; } = "TODO ;-)";
-
         public BurglarAlertState State
         {
             get { return state; }
@@ -56,6 +44,8 @@ namespace XamlBrewer.IoT.GrovePiSample.ViewModels
                 buzzer.Sensor.ChangeState(GrovePi.Sensors.SensorStatus.Off);
 
                 SetProperty(ref state, value);
+
+                Info = State.ToString();
 
                 switch (state)
                 {
@@ -84,11 +74,13 @@ namespace XamlBrewer.IoT.GrovePiSample.ViewModels
             }
         }
 
-        public string Message
+        public string Info
         {
-            get { return message; }
-            set { SetProperty(ref message, value); }
+            get { return info; }
+            set { SetProperty(ref info, value); }
         }
+
+        public List<SensorBase> Sensors { get; } = new List<SensorBase>();
 
         public ICommand StartCommand
         {
@@ -102,9 +94,14 @@ namespace XamlBrewer.IoT.GrovePiSample.ViewModels
 
         private void AddSensors()
         {
-            blinky = new Led() { Name = "Blinky", Port = "D5" };
             irSensor = new PassiveInfraRedSensor() { Name = "Motion Sensor", Port = "D2" };
+            Sensors.Add(irSensor);
+
+            blinky = new Led() { Name = "Blinky", Port = "D5" };
+            Sensors.Add(blinky);
+
             buzzer = new VibrationMotor() { Name = "Vibration Motor", Port = "D6" };
+            Sensors.Add(buzzer);
         }
 
         private void Start_Executed()
@@ -139,7 +136,10 @@ namespace XamlBrewer.IoT.GrovePiSample.ViewModels
                         ToggleLed();
 
                         Log.Info("Motion detected " + (DateTime.Now - motionDetection).Seconds.ToString());
-                        if ((DateTime.Now - motionDetection).Seconds > 10)
+                        var delay = (DateTime.Now - motionDetection).Seconds;
+                        Info = string.Format("Motion detected ({0})", 10 - delay);
+
+                        if (delay > 10)
                         {
                             if (irSensor.Sensor.CurrentState == GrovePi.Sensors.SensorStatus.On)
                             {
