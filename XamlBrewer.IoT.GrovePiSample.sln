@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Screenshots", "Screenshots", "{DAB8170B-F521-4C43-A2A1-610D19275AC4}"
 	ProjectSection(SolutionItems) = preProject
 		Screenshots\Board.jpg = Screenshots\Board.jpg
+		Screenshots\BurglarAlert.jpg = Screenshots\BurglarAlert.jpg
 		Screenshots\Home.jpg = Screenshots\Home.jpg
 	EndProjectSection
 EndProject
