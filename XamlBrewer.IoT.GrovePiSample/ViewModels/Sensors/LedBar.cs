@@ -15,7 +15,7 @@ namespace XamlBrewer.IoT.Sensors
         }
 
         /// <summary>
-        /// Tries some calls to get LEDs blinking.
+        /// Walks through the levels.
         /// </summary>
         /// <remarks>Requires firmware version 1.2.2 on the GrovePi.</remarks>
         public override async Task Test()
