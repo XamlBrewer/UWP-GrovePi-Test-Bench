@@ -11,9 +11,7 @@ Currently supported:
 * Rotary Angle Sensor
 * Temperature Sensor
 * Vibration Motor
-
-Probably supported:
-* LED Bar (should work on a GrovePi+ board with firmware 1.2.2 or higher)
+* LED Bar (requires GrovePi board firmware 1.2.2 or higher)
 
 Doing research on:
 * Infrared Emitter
