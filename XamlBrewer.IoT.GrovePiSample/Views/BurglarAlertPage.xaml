@@ -6,49 +6,70 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d">
 
-    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-                VerticalAlignment="Stretch"
-                HorizontalAlignment="Stretch">
-        <TextBlock Text="{x:Bind ViewModel.Message, Mode=OneWay}"
-                   Foreground="Black"
-                   Margin="6" />
-        <Grid Margin="4"
-              BorderBrush="{StaticResource TitlebarBackgroundBrush}"
-              BorderThickness="1"
-              VerticalAlignment="Top"
-              HorizontalAlignment="Left"
-              Width="200">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="30" />
-                <RowDefinition Height="170" />
-                <RowDefinition Height="40" />
-                <RowDefinition Height="auto" />
-            </Grid.RowDefinitions>
-            <Grid Background="{StaticResource TitlebarBackgroundBrush}">
-                <TextBlock Text="{x:Bind ViewModel.Name}"
-                           Foreground="White"
-                           FontWeight="SemiBold"
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+          VerticalAlignment="Stretch"
+          HorizontalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <TextBlock Text="{x:Bind ViewModel.Message, Mode=OneWay}"
+                       Foreground="Black"
+                       Margin="6" />
+            <Grid Margin="4"
+                  BorderBrush="{StaticResource TitlebarBackgroundBrush}"
+                  BorderThickness="1"
+                  VerticalAlignment="Top"
+                  HorizontalAlignment="Left"
+                  Width="200">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="170" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Grid Background="{StaticResource TitlebarBackgroundBrush}">
+                    <TextBlock Text="{x:Bind ViewModel.Name}"
+                               Foreground="White"
+                               FontWeight="SemiBold"
+                               Padding="8 4" />
+                </Grid>
+                <Grid Background="Silver"
+                      Grid.Row="3">
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                Height="50">
+                        <AppBarButton Command="{x:Bind ViewModel.StartCommand}"
+                                      Icon="Play"
+                                      Foreground="{StaticResource SplitViewBackgroundBrush}" />
+                        <AppBarButton Command="{x:Bind ViewModel.StopCommand}"
+                                      Icon="Stop"
+                                      Foreground="DarkRed" />
+                    </StackPanel>
+                </Grid>
+                <TextBlock Text="{x:Bind ViewModel.State, Mode=OneWay}"
+                           TextWrapping="WrapWholeWords"
+                           Grid.Row="2"
                            Padding="8 4" />
-            </Grid>
-            <Grid Background="Silver"
-                  Grid.Row="3">
-                <StackPanel Orientation="Horizontal"
-                            HorizontalAlignment="Center"
-                            Height="50">
-                    <AppBarButton Command="{x:Bind ViewModel.StartCommand}"
-                                  Icon="Play"
-                                  Foreground="{StaticResource SplitViewBackgroundBrush}" />
-                    <AppBarButton Command="{x:Bind ViewModel.StopCommand}"
-                                  Icon="Stop"
-                                  Foreground="DarkRed" />
-                </StackPanel>
-            </Grid>
-            <TextBlock Text="{x:Bind ViewModel.State, Mode=OneWay}"
-                       TextWrapping="WrapWholeWords"
-                       Grid.Row="2"
-                       Padding="8 4" />
 
-        </Grid>
-
-    </StackPanel>
+            </Grid>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Stretch"
+                    Grid.Column="1">
+            <Path Data="M10.641299,18.130163C10.641299,18.130163,11.643302,23.740085,15.950326,23.439094L16.150323,23.439094C20.55734,23.539099,21.358337,18.130163,21.358337,18.130163L28.971376,20.534136C33.178394,22.638111,31.775388,29.85,31.775388,29.85L0.22425698,29.85C0.22425704,29.85,-1.1777491,22.638111,3.0292687,20.534136z M9.2392926,8.6152972L11.042302,10.117275C12.444308,11.62026,13.946312,10.919266,13.946312,10.919266L15.849328,9.917281 15.950326,9.917281 16.050317,9.917281 17.853334,10.919266C17.853334,10.919266,19.355339,11.62026,20.757337,10.117275L22.560354,8.6152972C24.764358,10.318276 21.859348,12.72225 21.859348,12.72225 21.15834,14.925221 20.257335,15.827202 20.257335,15.827202 19.155342,19.332157 15.849328,18.631163 15.849328,18.631163 15.649315,18.631163 12.644306,19.232153 11.542304,15.827202 11.542304,15.827202 10.641299,14.925221 9.9402995,12.72225 9.9402995,12.72225 7.0352816,10.318276 9.2392926,8.6152972z M18.754339,8.5153073L19.255332,8.5153073C19.656335,8.5153073 20.056331,8.6152972 20.056331,8.8153066 20.056331,9.1162976 19.556329,9.4162959 18.955327,9.5162858 18.25333,9.6172818 17.753328,9.5162858 17.65233,9.2163018 17.65233,8.9152964 18.153324,8.6152972 18.754339,8.5153073z M12.444308,8.5153073L12.945309,8.5153073C13.646308,8.6152972 14.147317,8.9152964 14.047311,9.2163018 14.047311,9.5162858 13.44631,9.6172818 12.744312,9.5162858 12.043305,9.4162959 11.542304,9.1162976 11.643302,8.8153066 11.643302,8.6152972 12.043305,8.5153073 12.444308,8.5153073z M15.262462,0.00058940003C15.356678,-0.00040931322,15.452292,-0.00014285435,15.549324,0.0014195734L15.849328,0.0014195734 16.150323,0.0014195734C22.360342,-0.098569965,22.761342,5.1093496,22.661352,7.5133227L9.0382962,7.5133227C8.9398589,5.1469115,9.3268828,0.063492963,15.262462,0.00058940003z"
+                  Stretch="Uniform"
+                  Fill="Black"
+                  Width="200"
+                  Height="200"
+                  HorizontalAlignment="Right"
+                  Margin="20" />
+            <TextBlock Text="Burglar Alert"
+                       Foreground="{StaticResource SplitViewBackgroundBrush}"
+                       FontSize="36"
+                       HorizontalAlignment="Right"
+                       Margin="20 0" />
+            
+        </StackPanel>
+    </Grid>
 </Page>
